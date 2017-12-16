@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Student" type="com.huyaoban.mybatis3.domain.Student"/>
+		<typeAlias alias="Address" type="com.huyaoban.mybatis3.domain.Address"/>
+		<typeAlias alias="Course" type="com.huyaoban.mybatis3.domain.Course"/>
+		<typeAlias alias="Tutor" type="com.huyaoban.mybatis3.domain.Tutor"/>
+		<typeAlias alias="UserPic" type="com.huyaoban.mybatis3.domain.UserPic"/>
+	</typeAliases>
+	
+	<typeHandlers>
+		<typeHandler handler="com.huyaoban.mybatis3.domain.handler.PhoneTypeHandler"/>
+	</typeHandlers>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://192.168.119.10:3306/mybatis"/>
+				<property name="username" value="root"/>
+        		<property name="password" value="root.123"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="com/huyaoban/mybatis3/mapper/StudentMapper.xml"/>
+		<mapper resource="com/huyaoban/mybatis3/mapper/TutorMapper.xml"/>
+		<mapper resource="com/huyaoban/mybatis3/mapper/CourseMapper.xml"/>
+		<mapper resource="com/huyaoban/mybatis3/mapper/UserPicMapper.xml"/>
+	</mappers>
+</configuration>

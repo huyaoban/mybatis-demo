@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huyaoban.mybatis3.mapper.StudentMapper">
+	<resultMap id="AddressResult" type="Address">
+		<id property="addrId" column="addr_id"/>
+		<result property="country" column="country"/>
+		<result property="state" column="state"/>
+		<result property="city" column="city"/>
+		<result property="street" column="street"/>
+		<result property="zip" column="zip"/>
+	</resultMap>
+
+	<resultMap type="Student" id="StudentResult">
+		<id property="studId" column="stud_id"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="dob" column="dob"/>
+	</resultMap>
+	
+	<resultMap type="Student" id="StudentWithAddressResult">
+		<id property="studId" column="stud_id"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="dob" column="dob"/>
+		<association property="address" column="addr_id" select="findAddressById"/>
+<!-- 		<association property="address" column="addr_id" select="com.huyaoban.mybatis3.mapper.StudentMapper.findAddressById"/> -->
+	</resultMap>
+	
+	<select id="findAddressById" parameterType="int" resultMap="AddressResult">
+		select * from addresses where addr_id = #{id}
+	</select>
+	
+	<select id="findAllStudents" resultMap="StudentResult">
+		select * from students
+	</select>
+	
+	<select id="findStudentById" parameterType="int" resultMap="StudentWithAddressResult">
+		select stud_id, name, email, phone, dob, addr_id
+		from students where stud_id = #{id}
+	</select>
+	
+<!-- 	默认情况下, MyBatis使用 EnumTypeHandler来处理 enum类型的 Java属性，并且将其存储为enum值的名称 -->
+<!-- 如果你希望存储原enum的顺序位置，而不是enum名，你需要明确地配置它mybatis-config.xml -->
+<!-- <typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler" javaType="com.mybatis3.domain.Gender"/> -->
+	<insert id="createStudent" parameterType="Student" useGeneratedKeys="true" keyProperty="studId">
+		insert into students(name, email, dob, phone, addr_id, gender)
+		values (#{name}, #{email}, #{dob}, #{phone}, #{address.addrId}, #{gender})
+	</insert>
+</mapper>

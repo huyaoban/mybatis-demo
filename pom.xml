@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.huyaoban.mybatis3</groupId>
+    <artifactId>mybatis-tutorials</artifactId>
+    <version>0.0.1</version>
+    <packaging>pom</packaging>
+
+    <name>Mybatis Tutorials</name>
+
+    <properties>
+    	<file.encoding>UTF-8</file.encoding>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <modules>
+        <module>jdbc</module>
+		<module>mybatis-demo01</module>
+		<module>mybatis-demo02</module>
+		<module>mybatis-demo03</module>
+		<module>mybatis-demo04</module>
+		<module>mybatis-demo05</module>
+		<module>mybatis-demo06</module>
+		<module>mybatis-demo07</module>
+		<module>mybatis-demo08</module>
+		<module>mybatis-demo09</module>
+		<module>mybatis-demo10</module>
+		<module>mybatis-demo11</module>
+		<module>mybatis-demo12</module>
+		<module>mybatis-demo13</module>
+		<module>mybatis-demo14</module>
+		<module>mybatis-demo15</module>
+		<module>mybatis-demo16</module>
+		<module>mybatis-demo17</module>
+		<module>mybatis-demo18</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.43</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+	        <resource>  
+	            <directory>src/main/resources</directory>  
+	            <includes>  
+		            <include>**/*.properties</include>  
+		            <include>**/*.xml</include>  
+	            </includes>
+<!-- 	            <excludes> -->
+<!-- 	            	<exclude>**/*.properties</exclude>   -->
+<!-- 		            <exclude>**/*.xml</exclude>  -->
+<!-- 	            </excludes> -->
+	            <!-- 开启过滤，可以排除一些资源文件，如果文件同时出现在include和exclude中，以exclude中的为主 -->
+	            <filtering>true</filtering>          
+	        </resource>
+	        <resource>  
+	            <directory>src/main/java</directory>  
+	            <includes>  
+		            <include>**/*.properties</include>  
+		            <include>**/*.xml</include>  
+	            </includes>
+	            <filtering>false</filtering>          
+	        </resource>
+        </resources>
+    </build>
+    
+
+</project>

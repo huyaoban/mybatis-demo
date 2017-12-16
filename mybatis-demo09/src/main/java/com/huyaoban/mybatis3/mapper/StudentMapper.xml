@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huyaoban.mybatis3.mapper.StudentMapper">
+	<resultMap id="AddressResult" type="Address">
+		<id property="addrId" column="addr_id"/>
+		<result property="country" column="country"/>
+		<result property="state" column="state"/>
+		<result property="city" column="city"/>
+		<result property="street" column="street"/>
+		<result property="zip" column="zip"/>
+	</resultMap>
+
+	<resultMap type="Student" id="StudentResult">
+		<id property="studId" column="stud_id"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="dob" column="dob"/>
+	</resultMap>
+	
+	<resultMap type="Student" id="StudentWithAddressResultInnerResultMap">
+		<id property="studId" column="stud_id"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<result property="dob" column="dob"/>
+		<association property="address" javaType="Address">
+			<id property="addrId" column="addr_id"/>
+			<result property="country" column="country"/>
+			<result property="state" column="state"/>
+			<result property="city" column="city"/>
+			<result property="street" column="street"/>
+			<result property="zip" column="zip"/>
+		</association>
+	</resultMap>
+	
+	<resultMap id="StudentWithAddressResult" type="Student" extends="StudentResult">
+<!-- 		association用来导入has-one类型的关联 -->
+		<association property="address" resultMap="AddressResult"/>
+	</resultMap>
+	
+	<select id="findAllStudents" resultMap="StudentResult">
+		select * from students
+	</select>
+	
+	<select id="findStudentById" parameterType="int" resultMap="StudentWithAddressResultInnerResultMap">
+		select stud_id, name, email, phone, dob, a.addr_id, a.country, a.state, a.city, a.street, a.zip 
+		from students s left join addresses a on s.addr_id = a.addr_id where s.stud_id = #{id}
+	</select>
+</mapper>

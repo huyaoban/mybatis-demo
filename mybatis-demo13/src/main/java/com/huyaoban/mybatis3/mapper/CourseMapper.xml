@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huyaoban.mybatis3.mapper.CourseMapper">
+	<resultMap id="CourseResult" type="Course">
+		<id property="courseId" column="course_id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="tutorId" column="tutor_id"/>
+	</resultMap>
+	
+	<insert id="createCourse" parameterType="Course" useGeneratedKeys="true" keyProperty="courseId">
+		insert into courses(name, description, start_date, end_date, tutor_id)
+		values (#{name}, #{description}, #{startDate}, #{endDate}, #{tutorId})
+	</insert>
+	
+	<select id="findCourseById" parameterType="int" resultMap="CourseResult">
+		select * from courses where course_id = #{id}
+	</select>
+	
+	<select id="findCourseByTutorId" parameterType="int" resultMap="CourseResult">
+		select * from courses where tutor_id = #{tutorId}
+	</select>
+	
+	<select id="searchCourses" parameterType="hashmap" resultMap="CourseResult">
+		select * from courses
+		where tutor_id = #{tutorId}
+		<if test="courseName != null">
+			and name like #{courseName}
+		</if>
+		<if test="startDate != null">
+			and start_date >= #{startDate}
+		</if>
+<!-- 		<if test="endDate != null"> -->
+<!-- 			and end_date <= #{endDate} -->
+<!-- 		</if> -->
+	</select>
+	
+	<select id="searchCoursesUsingChoose" parameterType="map" resultMap="CourseResult">
+		select * from courses
+		<choose>
+			<when test="searchBy == 'Tutor'">
+				where tutor_id = #{tutorId}
+			</when>
+			<when test="searchBy == 'CourseName'">
+				where name like #{courseName}
+			</when>
+			<otherwise>
+				where start_date >= now()
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="searchCourseUsingWhere" parameterType="map" resultMap="CourseResult">
+		select * from courses
+		<where>
+			<if test="tutorId != null">
+				and tutor_id = #{tutorId}
+			</if>
+			<if test="courseName != null">
+				and name like #{courseName}
+			</if>
+			<if test="startDate != null">
+				and start_date >= #{startDate}
+			</if>
+			<if test="endDate != null">
+				and end_date &lt;= #{endDate}
+			</if>
+		</where>
+	</select>
+	
+	<select id="searchCourseUsingTrim" parameterType="map" resultMap="CourseResult">
+		select * from courses
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="tutorId != null">
+				and tutor_id = #{tutorId}
+			</if>
+			<if test="courseName != null">
+				and name like #{courseName}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="searchCourseUsingForeach" parameterType="map" resultMap="CourseResult">
+		select * from courses
+		<if test="tutorIds != null">
+			<where>
+				<foreach collection="tutorIds" item="tutorId">
+					or tutor_id = #{tutorId}
+				</foreach>
+			</where>
+		</if>
+	</select>
+	
+	<select id="searchCourseUsingForeachIn" parameterType="map" resultMap="CourseResult">
+		select * from courses
+		<if test="tutorIds != null">
+			<where>
+			tutor_id in 
+			<foreach collection="tutorIds" item="tutorId" open="(" separator="," close=")">
+				#{tutorId}
+			</foreach>
+			</where>
+		</if>
+	</select>
+	
+	<update id="updateCourseUsingSet" parameterType="Course">
+		update courses
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="description != null">description = #{description},</if>
+		</set>
+		where course_id = #{courseId}
+	</update>
+	
+</mapper>

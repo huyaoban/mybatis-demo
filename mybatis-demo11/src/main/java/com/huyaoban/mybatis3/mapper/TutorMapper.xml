@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huyaoban.mybatis3.mapper.TutorMapper">
+	<resultMap id="CourseResult" type="Course">
+		<id property="courseId" column="course_id"/>
+		<result property="name" column="course_name"/>
+		<result property="description" column="description"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="tutorId" column="tutor_id"/>
+	</resultMap>
+
+	<resultMap type="Tutor" id="TutorResult">
+		<id property="tutorId" column="tutor_id"/>
+		<result property="name" column="name"/>
+		<result property="email" column="email"/>
+		<result property="phone" column="phone"/>
+		<association property="address" resultMap="com.huyaoban.mybatis3.mapper.StudentMapper.AddressResult"/>
+		<collection property="courses" resultMap="CourseResult"/>
+	</resultMap>
+	
+	<select id="findTutorById" parameterType="int" resultMap="TutorResult">
+		select t.tutor_id, t.name, t.email, t.phone, a.addr_id, a.country, a.state, a.city, a.street, a.zip,
+			c.course_id, c.name as course_name, c.description, c.start_date, c.end_date 
+		from tutors t left join addresses a on t.addr_id = a.addr_id 
+		left join courses c on c.tutor_id = t.tutor_id where t.tutor_id = #{id}
+	</select>
+</mapper>
