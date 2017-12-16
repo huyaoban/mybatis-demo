@@ -7,13 +7,11 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-<<<<<<< HEAD
 .classpath
 .project
 .settings/
 rebel.xml
-=======
->>>>>>> fcf31cba2327aadba10c851904566819f14766d6
+
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
