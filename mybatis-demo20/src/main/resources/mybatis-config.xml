@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Student" type="com.huyaoban.mybatis3.domain.Student"/>
+	</typeAliases>
+	
+	<typeHandlers>
+		<typeHandler handler="com.huyaoban.mybatis3.domain.handler.PhoneTypeHandler"/>
+	</typeHandlers>
+	
+	<plugins>
+		<plugin interceptor="com.huyaoban.mybatis3.paging.PageInterceptor">
+			<property name="limit" value="4" />
+			<property name="dbType" value="mysql" />
+		</plugin>
+	</plugins>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://192.168.153.129:3306/mybatis"/>
+				<property name="username" value="root"/>
+        		<property name="password" value="root.123"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="com/huyaoban/mybatis3/mapper/StudentMapper.xml"/>
+	</mappers>
+</configuration>

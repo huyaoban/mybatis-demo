@@ -37,6 +37,7 @@
 		<module>mybatis-demo17</module>
 		<module>mybatis-demo18</module>
 		<module>mybatis-demo19</module>
+		<module>mybatis-demo20</module>
     </modules>
 
     <dependencies>
@@ -71,6 +72,17 @@
 	            <filtering>false</filtering>          
 	        </resource>
         </resources>
+        
+        <plugins>  
+	        <plugin>  
+	            <groupId>org.apache.maven.plugins</groupId>  
+	            <artifactId>maven-compiler-plugin</artifactId>  
+	            <configuration>  
+	                <source>1.7</source>  
+	                <target>1.7</target>  
+	            </configuration>  
+	        </plugin>  
+	    </plugins> 
     </build>
     
 
