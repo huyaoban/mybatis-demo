@@ -36,6 +36,7 @@
 		<module>mybatis-demo16</module>
 		<module>mybatis-demo17</module>
 		<module>mybatis-demo18</module>
+		<module>mybatis-demo19</module>
     </modules>
 
     <dependencies>
